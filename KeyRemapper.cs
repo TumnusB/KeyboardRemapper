@@ -1,24 +1,23 @@
-﻿using System.Reflection;
-using HarmonyLib; // HarmonyLib comes included with a ResoniteModLoader install
+﻿using HarmonyLib;
 using ResoniteModLoader;
 using Elements.Core;
 using FrooxEngine;
 using FrooxEngine.CommonAvatar;
 using FrooxEngine.Undo;
 using Renderite.Shared;
-using static FrooxEngine.KeyboardAndMouseBindingGenerator;
+
 
 namespace KeyboardRemapper;
 
 public class KeyRemapper : ResoniteMod
 {
-    internal const string VERSION_CONSTANT = "0.0.1"; // Version of the mod
-    public override string Name => "Keyboard Remapper"; // Your mods name
-    public override string Author => "MrTumnus"; // Your name
+    internal const string VERSION_CONSTANT = "0.0.1"; 
+    public override string Name => "Keyboard Remapper"; 
+    public override string Author => "MrTumnus"; 
     public override string Version => VERSION_CONSTANT;
 
     public override string Link =>
-        "https://github.com/YourNameHere/ExampleMod"; // Optional link to a repo where this mod would be located
+        "https://github.com/TumnusB/KeyboardRemapper";
 
     //Misc Input
     [AutoRegisterConfigKey] private static readonly ModConfigurationKey<Key> devtip_Focus =
