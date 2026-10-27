@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <CopyToMods Condition="'$(CopyToMods)'==''">true</CopyToMods>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="0Harmony">
+        <HintPath>..\..\.local\share\Steam\steamapps\common\Resonite\rml_libs\0Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="Elements.Core">
+        <HintPath>..\..\.local\share\Steam\steamapps\common\Resonite\Elements.Core.dll</HintPath>
+      </Reference>
+      <Reference Include="FrooxEngine">
+        <HintPath>..\..\.local\share\Steam\steamapps\common\Resonite\FrooxEngine.dll</HintPath>
+      </Reference>
+      <Reference Include="Renderite.Shared">
+        <HintPath>..\..\.local\share\Steam\steamapps\common\Resonite\Renderite.Shared.dll</HintPath>
+      </Reference>
+      <Reference Include="ResoniteModLoader">
+        <HintPath>..\..\.local\share\Steam\steamapps\common\Resonite\Libraries\ResoniteModLoader.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <PropertyGroup Condition="'$(ResonitePath)'==''">
+        <!-- If you don't want to provide a ResonitePath in dotnet build, you can specify one here -->
+        <ResonitePath>$(MSBuildThisFileDirectory)Resonite/</ResonitePath>
+        <ResonitePath Condition="Exists('C:\Program Files (x86)\Steam\steamapps\common\Resonite\')">C:\Program Files (x86)\Steam\steamapps\common\Resonite\</ResonitePath>
+        <ResonitePath Condition="Exists('$(HOME)/.steam/steam/steamapps/common/Resonite/')">$(HOME)/.steam/steam/steamapps/common/Resonite/</ResonitePath>
+
+        <ResonitePath Condition="Exists('F:\SteamLibrary\steamapps\common\Resonite\')">F:\SteamLibrary\steamapps\common\Resonite\</ResonitePath>
+    </PropertyGroup>
+
+    <Target Name="ClearReferenceCopyLocalPaths" AfterTargets="ResolveAssemblyReferences">
+        <ItemGroup>
+            <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" />
+        </ItemGroup>
+    </Target>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(CopyToMods)'=='true'">
+        <Message Text="Attempting to copy $(TargetFileName) to $(ResonitePath)rml_mods" Importance="high" />
+        <Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFolder="$(ResonitePath)rml_mods" ContinueOnError="true" />
+    </Target>
+
+</Project>
